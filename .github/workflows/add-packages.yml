@@ -1,0 +1,41 @@
+name: Add Packages to Readme
+on:
+  push:
+    paths:
+      - 'bucket/**'
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate Package List
+        run: |
+          LIST=$(ls bucket/*.json 2>/dev/null | sed 's|bucket/||;s/\.json$//' | awk '{print "- ["$1"](bucket/"$1".json)"}')
+          
+          python3 << 'PYTHON'
+          import re
+          
+          with open('README.md', 'r') as f:
+              content = f.read()
+          
+          list_content = """$LIST"""
+          
+          pattern = r'(<!-- START_PACKAGE_ARRAY -->)(.*?)(<!-- END_PACKAGE_ARRAY -->)'
+          replacement = r'\1\n' + list_content + r'\n\3'
+          content = re.sub(pattern, replacement, content, flags=re.DOTALL)
+          
+          with open('README.md', 'w') as f:
+              f.write(content)
+          PYTHON
+
+      - name: Commit and Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "docs: update package list in README" || exit 0
+          git push
