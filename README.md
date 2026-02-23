@@ -4,5 +4,5 @@ Install to scoop using `scoop bucket add shadowplayzdev https://github.com/Shado
 
 ### Current Packages in this bucket
 <!-- START_PACKAGE_ARRAY -->
-$LIST
+- [ow-overlay](bucket/ow-overlay.json)
 <!-- END_PACKAGE_ARRAY -->
