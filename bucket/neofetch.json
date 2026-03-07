@@ -5,7 +5,12 @@
     "license": "MIT",
     "url": "https://github.com/ShadowPlayzDev/neofetch/releases/download/stable-1.0.0/install.ps1",
     "hash": "cf593132b1933e6bbda3a73edf7cd1f57cef6e16aecb9d09ada7a484323b7491",
-    "bin": "install.ps1",
+    "installer": {
+        "script": "& \"$dir\\install.ps1\""
+    },
+    "bin": [
+        ["install.ps1", "neofetch"]
+    ],
     "checkver": {
         "github": "https://github.com/ShadowPlayzDev/neofetch",
         "regex": "(?<type>stable|beta|alpha)-(?<ver>[\\d.]+)"
