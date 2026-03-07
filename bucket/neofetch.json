@@ -3,19 +3,32 @@
     "description": "Cross-platform Neofetch for Windows, Linux, and MacOS!",
     "homepage": "https://github.com/ShadowPlayzDev",
     "license": "MIT",
-    "url": "https://github.com/ShadowPlayzDev/neofetch/releases/download/stable-1.0.0/install.ps1",
-    "hash": "cf593132b1933e6bbda3a73edf7cd1f57cef6e16aecb9d09ada7a484323b7491",
-    "installer": {
-        "script": "& \"$dir\\install.ps1\""
-    },
+    "url": [
+        "https://raw.githubusercontent.com/ShadowPlayzDev/neofetch/main/dist/win-ps/src/neofetch.ps1",
+        "https://raw.githubusercontent.com/ShadowPlayzDev/neofetch/main/dist/win-ps/src/neofetch.bat",
+        "https://raw.githubusercontent.com/ShadowPlayzDev/neofetch/main/dist/win-ps/src/textart.cfg"
+    ],
+    "hash": [
+        "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
     "bin": [
-        ["install.ps1", "neofetch"]
+        "neofetch.ps1",
+        "neofetch.bat"
+    ],
+    "post_install": [
+        "if (!(Test-Path \"$dir\\logos\")) { New-Item -ItemType Directory -Path \"$dir\\logos\" -Force }"
     ],
     "checkver": {
         "github": "https://github.com/ShadowPlayzDev/neofetch",
         "regex": "(?<type>stable|beta|alpha)-(?<ver>[\\d.]+)"
     },
     "autoupdate": {
-        "url": "https://github.com/ShadowPlayzDev/neofetch/releases/download/$matchType-$matchVer/install.ps1"
+        "url": [
+            "https://raw.githubusercontent.com/ShadowPlayzDev/neofetch/main/dist/win-ps/src/neofetch.ps1",
+            "https://raw.githubusercontent.com/ShadowPlayzDev/neofetch/main/dist/win-ps/src/neofetch.bat",
+            "https://raw.githubusercontent.com/ShadowPlayzDev/neofetch/main/dist/win-ps/src/textart.cfg"
+        ]
     }
 }
