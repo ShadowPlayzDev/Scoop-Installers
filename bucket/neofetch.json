@@ -2,5 +2,15 @@
     "version": "1.0.0",
     "description": "Cross-platform Neofetch for Windows, Linux, and MacOS!",
     "homepage": "https://github.com/ShadowPlayzDev",
-    "license": "MIT"
+    "license": "MIT",
+    "url": "https://github.com/ShadowPlayzDev/neofetch/releases/download/stable-1.0.0/install.ps1",
+    "hash": "8b67ccf0d5410d0810e8be7b9a3488c7a857b5290c33ef94f0455ab55cb8e0e0",
+    "bin": "install.ps1",
+    "checkver": {
+        "github": "https://github.com/ShadowPlayzDev/neofetch",
+        "regex": "(?<type>stable|beta|alpha)-(?<ver>[\\d.]+)"
+    },
+    "autoupdate": {
+        "url": "https://github.com/ShadowPlayzDev/neofetch/releases/download/$matchType-$matchVer/install.ps1"
+    }
 }
