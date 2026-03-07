@@ -11,7 +11,7 @@
     "hash": [
         "sha256:4144f84a02798b87fb7a53fda2d3bd4436329cf0223d2362f4743f13fbf7a906",
         "sha256:8221ea7699fadcfe54a01f2fc199c089e41a2419c2563667907413d5ae9ced63",
-        "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        "sha256:bb328ce5f07f866b508fd9fa8c776068cdd7be857b295c7ccc9d51f0dbcbf326"
     ],
     "bin": [
         "neofetch.ps1",
