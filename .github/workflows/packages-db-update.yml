@@ -1,0 +1,49 @@
+name: Update Bucket Listings
+on:
+  push:
+    paths:
+      - 'bucket/**.json' # ONLY triggers on JSON manifest change
+  workflow_dispatch:      # Allow manual run
+
+jobs:
+  update-db:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Sync Database
+        shell: python
+        run: |
+          import json
+          import os
+
+          bucket_dir = os.path.join(os.getcwd(), 'bucket')
+          db_path = os.path.join(os.getcwd(), 'site', 'apps.js')
+
+          # 1. Get the current list of apps actually sitting in the folder
+          if os.path.exists(bucket_dir):
+              # Get filenames, remove .json extension, and sort alphabetically
+              apps = sorted([f.replace('.json', '') for f in os.listdir(bucket_dir) if f.endswith('.json')])
+          else:
+              apps = []
+
+          # 2. Ensure the site directory exists
+          os.makedirs(os.path.dirname(db_path), exist_ok=True)
+
+          # 3. Overwrite apps.js with the fresh list
+          # This handles Adds, Deletes, and Renames perfectly
+          with open(db_path, 'w') as f:
+              f.write("// GitHub Bot will Append to this list on push to bucket dir in repo\n")
+              f.write(f"export const appList = {json.dumps(apps, indent=2)};")
+
+      - name: Commit and Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add site/apps.js
+          # [skip ci] is the "kill switch" for loops
+          git commit -m "Bot: Update Package Database [skip ci]" || exit 0
+          git push
